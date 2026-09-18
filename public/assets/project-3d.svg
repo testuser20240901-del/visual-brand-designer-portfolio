@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 820">
+  <defs>
+    <linearGradient id="bg3d" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07101a"/>
+      <stop offset=".55" stop-color="#102b3b"/>
+      <stop offset="1" stop-color="#05070a"/>
+    </linearGradient>
+    <linearGradient id="glass" x1=".1" y1="0" x2=".9" y2="1">
+      <stop offset="0" stop-color="#d8f5ff" stop-opacity=".92"/>
+      <stop offset=".48" stop-color="#43c9ff" stop-opacity=".32"/>
+      <stop offset="1" stop-color="#1557ff" stop-opacity=".08"/>
+    </linearGradient>
+    <radialGradient id="halo">
+      <stop offset="0" stop-color="#45c9ff" stop-opacity=".48"/>
+      <stop offset="1" stop-color="#45c9ff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="shadow"><feGaussianBlur stdDeviation="24"/></filter>
+  </defs>
+  <rect width="1200" height="820" fill="url(#bg3d)"/>
+  <ellipse cx="620" cy="690" rx="380" ry="70" fill="#020407" opacity=".8" filter="url(#shadow)"/>
+  <circle cx="620" cy="390" r="360" fill="url(#halo)"/>
+  <g transform="translate(385 100)">
+    <path d="M215 0 430 125 430 420 215 545 0 420 0 125Z" fill="none" stroke="#8ce2ff" stroke-opacity=".3" stroke-width="2"/>
+    <path d="M215 28 403 138 403 402 215 512 27 402 27 138Z" fill="url(#glass)" stroke="#c9f3ff" stroke-opacity=".65" stroke-width="3"/>
+    <path d="M215 28 215 512M27 138 403 402M403 138 27 402" fill="none" stroke="#f4fbff" stroke-opacity=".28"/>
+    <circle cx="215" cy="270" r="106" fill="#06111b" stroke="#86dfff" stroke-width="3"/>
+    <path d="m215 190 70 121H145Z" fill="#eafaff"/>
+    <circle cx="215" cy="270" r="145" fill="none" stroke="#45c9ff" stroke-opacity=".24" stroke-width="22"/>
+  </g>
+  <text x="68" y="90" fill="#45c9ff" font-family="Arial" font-size="20" letter-spacing="5">3D VISUALIZATION</text>
+  <text x="70" y="735" fill="#ffffff" font-family="Arial" font-size="64" font-weight="700">FORM / LIGHT / SPACE</text>
+  <text x="73" y="780" fill="#ffffff" opacity=".46" font-family="Arial" font-size="20">Product rendering · spatial composition · material study</text>
+</svg>

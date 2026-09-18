@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 820">
+  <defs>
+    <linearGradient id="shopbg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f0f4f7"/>
+      <stop offset=".55" stop-color="#d7e8ee"/>
+      <stop offset="1" stop-color="#9ab7c0"/>
+    </linearGradient>
+    <linearGradient id="bottle" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset=".5" stop-color="#a9e7ff"/>
+      <stop offset="1" stop-color="#316578"/>
+    </linearGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="18"/></filter>
+  </defs>
+  <rect width="1200" height="820" fill="url(#shopbg)"/>
+  <circle cx="930" cy="170" r="250" fill="#ffffff" opacity=".52"/>
+  <path d="M0 645C230 535 360 720 610 610S980 500 1200 590V820H0Z" fill="#0b1a22"/>
+  <ellipse cx="770" cy="680" rx="260" ry="42" fill="#020506" opacity=".32" filter="url(#soft)"/>
+  <g transform="translate(655 120)">
+    <rect x="95" y="0" width="145" height="88" rx="14" fill="#0a151b"/>
+    <rect x="42" y="70" width="250" height="470" rx="52" fill="url(#bottle)" stroke="#ffffff" stroke-opacity=".8" stroke-width="4"/>
+    <rect x="72" y="260" width="190" height="150" rx="8" fill="#f8fbfc" opacity=".9"/>
+    <text x="108" y="310" fill="#0b1a22" font-family="Arial" font-size="22" font-weight="700">AERIS</text>
+    <text x="108" y="342" fill="#316578" font-family="Arial" font-size="13" letter-spacing="3">ESSENCE</text>
+    <rect x="108" y="370" width="110" height="2" fill="#316578" opacity=".5"/>
+  </g>
+  <g transform="translate(74 108)">
+    <text x="0" y="0" fill="#1557ff" font-family="Arial" font-size="18" letter-spacing="5">E-COMMERCE VISUAL</text>
+    <text x="0" y="104" fill="#071018" font-family="Arial" font-size="78" font-weight="700">精华焕亮</text>
+    <text x="0" y="162" fill="#34505c" font-family="Arial" font-size="28">轻盈质地 · 深层润养</text>
+    <rect x="0" y="214" width="380" height="1" fill="#071018" opacity=".18"/>
+    <text x="0" y="275" fill="#071018" font-family="Arial" font-size="20">产品主图 / 卖点层级 / 活动视觉</text>
+    <rect x="0" y="330" width="200" height="58" rx="29" fill="#1557ff"/>
+    <text x="48" y="367" fill="#ffffff" font-family="Arial" font-size="18">SHOP NOW  →</text>
+  </g>
+</svg>
