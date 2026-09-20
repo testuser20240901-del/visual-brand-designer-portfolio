@@ -2,15 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   ArrowDown, ArrowUpRight, BriefcaseBusiness, Clapperboard, Layers3, Mail,
-  MapPin, Menu, MonitorSmartphone, Package, Palette, Phone, Target, Wand2, X,
+  MapPin, MonitorSmartphone, Package, Palette, Phone, Target, Wand2, X,
 } from 'lucide-react';
 import './styles.css';
-import Prism from './Prism';
-
-const navItems = [
-  { label: '关于', href: '#experience' }, { label: '项目', href: '#projects' },
-  { label: '能力', href: '#strengths' }, { label: '联系', href: '#contact' },
-];
 
 const stats = [
   { value: '6+', label: '年设计与品牌策划经验' }, { value: '805K+', label: '自媒体内容推广曝光' },
@@ -128,49 +122,80 @@ function useReveal() {
   }, []);
 }
 
+const starPaths = [
+  'M27.15 17.40L28.05 3.45A2.05 2.05 0 0 0 23.95 3.45L24.85 17.40Z',
+  'M30.35 18.49L36.52 5.95A2.05 2.05 0 0 0 32.74 4.38L28.23 17.61Z',
+  'M32.89 20.73L43.39 11.50A2.05 2.05 0 0 0 40.50 8.61L31.27 19.11Z',
+  'M34.39 23.77L47.62 19.26A2.05 2.05 0 0 0 46.05 15.48L33.51 21.65Z',
+  'M34.60 27.15L48.55 28.05A2.05 2.05 0 0 0 48.55 23.95L34.60 24.85Z',
+  'M33.51 30.35L46.05 36.52A2.05 2.05 0 0 0 47.62 32.74L34.39 28.23Z',
+  'M31.27 32.89L40.50 43.39A2.05 2.05 0 0 0 43.39 40.50L32.89 31.27Z',
+  'M28.23 34.39L32.74 47.62A2.05 2.05 0 0 0 36.52 46.05L30.35 33.51Z',
+  'M24.85 34.60L23.95 48.55A2.05 2.05 0 0 0 28.05 48.55L27.15 34.60Z',
+  'M21.65 33.51L15.48 46.05A2.05 2.05 0 0 0 19.26 47.62L23.77 34.39Z',
+  'M19.11 31.27L8.61 40.50A2.05 2.05 0 0 0 11.50 43.39L20.73 32.89Z',
+  'M17.61 28.23L4.38 32.74A2.05 2.05 0 0 0 5.95 36.52L18.49 30.35Z',
+  'M17.40 24.85L3.45 23.95A2.05 2.05 0 0 0 3.45 28.05L17.40 27.15Z',
+  'M18.49 21.65L5.95 15.48A2.05 2.05 0 0 0 4.38 19.26L17.61 23.77Z',
+  'M20.73 19.11L11.50 8.61A2.05 2.05 0 0 0 8.61 11.50L19.11 20.73Z',
+  'M23.77 17.61L19.26 4.38A2.05 2.05 0 0 0 15.48 5.95L21.65 18.49Z',
+];
+
 function Header() {
   const [open, setOpen] = useState(false);
+  useEffect(() => {
+    const close = (event) => event.key === 'Escape' && setOpen(false);
+    const tablet = window.matchMedia('(max-width:1080px) and (max-aspect-ratio:0.91/1), (max-width:620px) and (min-height:480px)');
+    const closeDesktopMenu = () => !tablet.matches && setOpen(false);
+    window.addEventListener('keydown', close);
+    tablet.addEventListener('change', closeDesktopMenu);
+    return () => {
+      window.removeEventListener('keydown', close);
+      tablet.removeEventListener('change', closeDesktopMenu);
+    };
+  }, []);
   return (
-    <header className="site-header">
-      <a className="brand-mark" href="#hero" aria-label="返回首页">
-        <span className="brand-symbol">G</span>
-        <span><strong>GUAN</strong><small>VISUAL DESIGN</small></span>
-      </a>
-      <nav className={`desktop-nav ${open ? 'is-open' : ''}`} aria-label="主导航">
-        {navItems.map((item) => <a key={item.href} href={item.href} onClick={() => setOpen(false)}>{item.label}</a>)}
+      <nav className={`gateway-nav ${open ? 'open' : ''}`} aria-label="Primary navigation">
+        <div className="nav-links" onClick={(event) => event.target === event.currentTarget && setOpen(false)}>
+          <a className="nav-link" href="#solutions" onClick={() => setOpen(false)}>Solutions</a>
+          <a className="nav-link" href="#product" onClick={() => setOpen(false)}>Product</a>
+          <a className="nav-link" href="#pricing" onClick={() => setOpen(false)}>Pricing</a>
+          <a className="nav-link" href="#recourses" onClick={() => setOpen(false)}>Recourses</a>
+        </div>
+        <a className="mark" href="#" aria-label="Home">
+          <svg viewBox="0 0 52 52" fill="none" aria-hidden="true"><g fill="#fff" stroke="#fff" strokeWidth=".9" strokeLinejoin="round">{starPaths.map((path) => <path d={path} key={path} />)}</g></svg>
+        </a>
+        <button className="gateway-burger" type="button" aria-label={open ? 'Close menu' : 'Open menu'} aria-expanded={open} onClick={() => setOpen(!open)}><span /><span /></button>
       </nav>
-      <a className="header-cta" href="mailto:979114406@qq.com">LET&apos;S TALK <ArrowUpRight size={17} /></a>
-      <button className="menu-button" aria-label={open ? '关闭导航' : '打开导航'} onClick={() => setOpen(!open)}>{open ? <X size={24} /> : <Menu size={24} />}</button>
-    </header>
   );
 }
 
 function Hero() {
+  useEffect(() => {
+    const cta = document.querySelector('.cta');
+    const finish = () => {
+      document.documentElement.classList.remove('ent');
+      if (cta) {
+        const display = cta.style.display;
+        cta.style.display = 'none';
+        void cta.offsetHeight;
+        cta.style.display = display;
+      }
+    };
+    cta?.addEventListener('animationend', (event) => event.animationName === 'entPanel' && finish(), { once: true });
+    const timer = window.setTimeout(finish, 2600);
+    return () => window.clearTimeout(timer);
+  }, []);
   return (
-    <section className="hero" id="hero">
-      <div className="hero-prism" aria-hidden="true">
-        <Prism
-          animationType="rotate"
-          timeScale={0.5}
-          height={3.5}
-          baseWidth={5.5}
-          scale={3.6}
-          hueShift={0}
-          colorFrequency={1}
-          noise={0}
-          glow={1}
-          suspendWhenOffscreen
-        />
-      </div>
-      <div className="hero-shade" aria-hidden="true" />
+    <section className="hero gateway-stage" id="hero">
+      <div className="gateway-scene" aria-hidden="true"><video autoPlay muted loop playsInline poster="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/dd434947-66e8-4157-9a51-e69b6fab4913.webp"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260826_124917_8316313b-031e-44c7-90fa-d660944081e1.mp4" type="video/mp4" /></video></div>
+      <div className="gateway-veil" aria-hidden="true" />
       <Header />
-      <div className="hero-inner">
-        <a className="hero-kicker" href="https://www.creght.com/" target="_blank" rel="noreferrer">✦ PERSONAL RESUME</a>
-        <h1>Brand<span>·</span>Planning</h1>
-        <p className="hero-cn">关维聪 · 视觉设计与品牌传播</p>
-        <a className="hero-scroll" href="#experience"><ArrowDown size={18} /> SCROLL TO EXPLORE</a>
+      <div className="gateway-stack">
+        <h1><span className="l1"><span>Your Personal Gateway&nbsp;To</span></span><span className="l2"><span>Global Connection</span></span></h1>
+        <p className="gateway-sub">Step through and&nbsp; host real-time, multilingual conversations - no extra <br className="brk" />Apps or plugins needed</p>
+        <a className="cta" href="#contact"><span>contact sales</span><i className="tl" /><i className="tr" /><i className="bl" /><i className="br" /></a>
       </div>
-      <div className="hero-meta"><span>PORTFOLIO / 2026</span><span>ZHONGSHAN · CHINA</span></div>
     </section>
   );
 }
@@ -178,6 +203,7 @@ function Hero() {
 function Experience() {
   return (
     <section className="section about-section" id="experience">
+      <span className="anchor-target" id="solutions" aria-hidden="true" />
       <div className="section-index" data-reveal><span>01</span><p>PERSONAL PROFILE</p></div>
       <div className="about-intro" data-reveal>
         <div className="portrait-shell"><img src="./assets/profile-wide-optimized.jpg" alt="关维聪户外人物照" decoding="async" /><span>AVAILABLE FOR PROJECTS</span></div>
@@ -249,6 +275,7 @@ function Projects() {
 
   return (
     <section className="section projects-section" id="projects">
+      <span className="anchor-target" id="product" aria-hidden="true" />
       <div className="section-index" data-reveal><span>02</span><p>SELECTED WORKS</p></div>
       <div className="projects-heading" data-reveal><h2>精选作品</h2><p>从品牌、数字页面到线下物料，把每一种媒介都当作品牌体验的一部分。</p></div>
       <div className="project-filters" data-reveal>{filters.map((item) => <button className={filter === item ? 'active' : ''} onClick={() => setFilter(item)} key={item}>{item}</button>)}</div>
@@ -286,6 +313,7 @@ function Projects() {
 function Strengths() {
   return (
     <section className="section strengths-section" id="strengths">
+      <span className="anchor-target" id="pricing" aria-hidden="true" />
       <div className="section-index" data-reveal><span>03</span><p>CORE CAPABILITIES</p></div>
       <div className="strengths-layout">
         <div className="strengths-title" data-reveal><p className="eyebrow">WHAT I DO</p><h2>策略、视觉与落地，保持在同一条线上。</h2></div>
@@ -299,6 +327,7 @@ function Strengths() {
 function Contact() {
   return (
     <section className="contact-section" id="contact">
+      <span className="anchor-target" id="recourses" aria-hidden="true" />
       <div className="contact-grid" aria-hidden="true" />
       <div className="contact-inner" data-reveal><p className="eyebrow">START A PROJECT</p><h2>有好的想法？<br /><span>一起把它做出来。</span></h2><a className="contact-mail" href="mailto:979114406@qq.com">979114406@qq.com <ArrowUpRight size={34} /></a><div className="contact-foot"><span><BriefcaseBusiness size={16} />BRAND CAMPAIGN</span><span><Target size={16} />VISUAL EXECUTION</span><span><Clapperboard size={16} />SHORT VIDEO</span><span><Wand2 size={16} />DIGITAL DESIGN</span></div></div>
       <footer><span>© 2026 GUAN WEICONG</span><a href="#hero">BACK TO TOP ↑</a></footer>
