@@ -193,7 +193,7 @@ function Hero() {
       <Header />
       <div className="gateway-stack">
         <h1 className="portfolio-title"><span className="l1"><span>Brand<span className="title-dot">·</span>Planning</span></span></h1>
-        <p className="gateway-sub">Step through and&nbsp; host real-time, multilingual conversations - no extra <br className="brk" />Apps or plugins needed</p>
+        <p className="gateway-sub">©2019-2026 · 关维聪品牌企划作品集</p>
         <a className="cta" href="#contact"><span>contact sales</span><i className="tl" /><i className="tr" /><i className="bl" /><i className="br" /></a>
       </div>
     </section>
@@ -211,7 +211,7 @@ function Experience() {
           <p className="eyebrow">ABOUT ME</p>
           <h2>让设计清晰地表达，<br />也切实地抵达。</h2>
           <p className="profile-lead">我是关维聪，一名专注于品牌视觉与商业传播的设计师。擅长把策略转译为可识别、可延展、可落地的视觉系统。</p>
-          <div className="contact-list"><a href="tel:13189288776"><Phone size={17} />13189288776</a><a href="mailto:979114406@qq.com"><Mail size={17} />979114406@qq.com</a><span><MapPin size={17} />广东中山</span></div>
+          <div className="contact-list"><span className="profile-age">AGE 28</span><a href="tel:13189288776"><Phone size={17} />13189288776</a><a href="mailto:979114406@qq.com"><Mail size={17} />979114406@qq.com</a><span><MapPin size={17} />广东中山</span></div>
         </div>
       </div>
       <div className="profile-details" data-reveal>

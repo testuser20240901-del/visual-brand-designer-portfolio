@@ -107,6 +107,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .profile-copy .contact-list { grid-column: 2; grid-row: 3; }
 .contact-list { display: flex; flex-wrap: wrap; gap: 14px 28px; margin-top: 42px; }
 .contact-list a, .contact-list span { display: inline-flex; align-items: center; gap: 8px; color: rgba(255,255,255,.76); font-size: 14px; }
+.contact-list .profile-age { color: var(--cyan); }
 .contact-list svg { color: var(--cyan); }
 .profile-details { display: grid; grid-template-columns: repeat(2, 1fr); margin-top: 82px; border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
 .profile-details article { min-height: 160px; padding: 28px 32px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
