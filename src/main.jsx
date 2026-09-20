@@ -158,7 +158,7 @@ function Header() {
       <nav className={`gateway-nav ${open ? 'open' : ''}`} aria-label="Primary navigation">
         <div className="nav-links" onClick={(event) => event.target === event.currentTarget && setOpen(false)}>
           <a className="nav-link" href="#experience" onClick={() => setOpen(false)}>关于我</a>
-          <a className="nav-link" href="#projects" onClick={() => setOpen(false)}>项目</a>
+          <a className="nav-link" href="#projects" onClick={() => setOpen(false)}>精选作品</a>
           <a className="nav-link" href="#strengths" onClick={() => setOpen(false)}>能力</a>
           <a className="nav-link" href="#contact" onClick={() => setOpen(false)}>联系</a>
         </div>
