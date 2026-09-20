@@ -157,10 +157,10 @@ function Header() {
   return (
       <nav className={`gateway-nav ${open ? 'open' : ''}`} aria-label="Primary navigation">
         <div className="nav-links" onClick={(event) => event.target === event.currentTarget && setOpen(false)}>
-          <a className="nav-link" href="#solutions" onClick={() => setOpen(false)}>Solutions</a>
-          <a className="nav-link" href="#product" onClick={() => setOpen(false)}>Product</a>
-          <a className="nav-link" href="#pricing" onClick={() => setOpen(false)}>Pricing</a>
-          <a className="nav-link" href="#recourses" onClick={() => setOpen(false)}>Recourses</a>
+          <a className="nav-link" href="#experience" onClick={() => setOpen(false)}>关于</a>
+          <a className="nav-link" href="#projects" onClick={() => setOpen(false)}>项目</a>
+          <a className="nav-link" href="#strengths" onClick={() => setOpen(false)}>能力</a>
+          <a className="nav-link" href="#contact" onClick={() => setOpen(false)}>联系</a>
         </div>
         <a className="mark" href="#" aria-label="Home">
           <svg viewBox="0 0 52 52" fill="none" aria-hidden="true"><g fill="#fff" stroke="#fff" strokeWidth=".9" strokeLinejoin="round">{starPaths.map((path) => <path d={path} key={path} />)}</g></svg>
@@ -192,7 +192,7 @@ function Hero() {
       <div className="gateway-veil" aria-hidden="true" />
       <Header />
       <div className="gateway-stack">
-        <h1><span className="l1"><span>Your Personal Gateway&nbsp;To</span></span><span className="l2"><span>Global Connection</span></span></h1>
+        <h1 className="portfolio-title"><span className="l1"><span>Brand<span className="title-dot">·</span>Planning</span></span></h1>
         <p className="gateway-sub">Step through and&nbsp; host real-time, multilingual conversations - no extra <br className="brk" />Apps or plugins needed</p>
         <a className="cta" href="#contact"><span>contact sales</span><i className="tl" /><i className="tr" /><i className="bl" /><i className="br" /></a>
       </div>

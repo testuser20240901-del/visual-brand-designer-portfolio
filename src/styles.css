@@ -267,6 +267,7 @@ footer a:hover { color: var(--cyan); }
 .gateway-stack h1 > span > span { display: block; }
 .gateway-stack .l1 { color: var(--c-head1); }
 .gateway-stack .l2 { color: var(--c-head2); }
+.gateway-stack .title-dot { color: var(--c-head2); }
 .gateway-sub { max-width: min(92vw, max(calc(820 * var(--k)), 460px)); margin: var(--gap-sub) 0 0; color: var(--c-sub); font-size: var(--fs-sub); font-weight: var(--fw-text); letter-spacing: var(--tracking-tight); line-height: var(--leading-body); }
 
 .cta{
