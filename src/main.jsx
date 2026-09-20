@@ -75,11 +75,13 @@ const projects = [
     type: '视频',
     index: '05',
     video: './assets/short-video-edit.mp4',
+    poster: './assets/short-video-edit.jpg',
     result: '素颜计划视频 · 节奏剪辑 · 品牌传播',
     gallery: [
-      { title: '素颜计划', src: './assets/short-video-edit.mp4' },
-      { title: '短视频作品 02', src: './assets/short-video-02.mp4' },
-      { title: '短视频作品 03', src: './assets/short-video-03.mp4' },
+      { title: '逸芙润 · 10月10日', src: './assets/short-video-01.mp4', poster: './assets/short-video-01.jpg' },
+      { title: '素颜计划 · 9月5日', src: './assets/short-video-edit.mp4', poster: './assets/short-video-edit.jpg' },
+      { title: '短视频剪辑作品 03', src: './assets/short-video-02.mp4', poster: './assets/short-video-02.jpg' },
+      { title: '短视频剪辑作品 04', src: './assets/short-video-03.mp4', poster: './assets/short-video-03.jpg' },
     ],
   },
   {
@@ -234,7 +236,7 @@ function Experience() {
   );
 }
 
-function LazyProjectVideo({ src, label }) {
+function LazyProjectVideo({ src, label, poster }) {
   const videoRef = useRef(null);
   const [shouldLoad, setShouldLoad] = useState(false);
 
@@ -253,7 +255,7 @@ function LazyProjectVideo({ src, label }) {
     return () => observer.disconnect();
   }, []);
 
-  return <video ref={videoRef} src={shouldLoad ? src : undefined} autoPlay={shouldLoad} muted loop playsInline preload="none" aria-label={label} />;
+  return <video ref={videoRef} src={shouldLoad ? src : undefined} poster={poster} autoPlay={shouldLoad} muted loop playsInline preload="none" aria-label={label} />;
 }
 
 function Projects() {
@@ -282,7 +284,7 @@ function Projects() {
       <div className="project-grid">
         {visible.map((project, index) => (
           <article className={`project-card project-card-${index % 5 + 1} is-visible ${project.gallery ? 'has-gallery' : ''} ${project.video ? '' : 'color-thumbnail-card'} tone-${project.index}`} key={project.title} data-reveal>
-            {project.video ? <LazyProjectVideo src={project.video} label={`${project.title}作品预览`} /> : <img src={project.image} alt={`${project.title}作品预览`} loading="lazy" decoding="async" />}
+            {project.video ? <LazyProjectVideo src={project.video} poster={project.poster} label={`${project.title}作品预览`} /> : <img src={project.image} alt={`${project.title}作品预览`} loading="lazy" decoding="async" />}
             <div className="project-overlay"><div><span>{project.index} / {project.type}</span><h3>{project.title}</h3><p>{project.result}</p></div><span className="project-arrow"><ArrowUpRight size={24} /></span></div>
             {project.gallery && <button className="project-open" type="button" aria-label={`打开${project.title}作品详情`} onClick={() => setActiveGallery(project)} />}
           </article>
@@ -298,7 +300,7 @@ function Projects() {
             <div className={`video-gallery ${activeGallery.galleryType === 'image' ? 'poster-gallery' : activeGallery.galleryType === 'image-wide' ? 'render-gallery' : ''}`}>
               {activeGallery.gallery.map((item) => (
                 <article key={item.src}>
-                  {activeGallery.galleryType?.startsWith('image') ? <img src={item.src} alt={item.title} loading="lazy" decoding="async" /> : <video src={item.src} controls playsInline preload="none" />}
+                  {activeGallery.galleryType?.startsWith('image') ? <img src={item.src} alt={item.title} loading="lazy" decoding="async" /> : <video src={item.src} poster={item.poster} controls playsInline preload="metadata" />}
                   <h4>{item.title}</h4>
                 </article>
               ))}
