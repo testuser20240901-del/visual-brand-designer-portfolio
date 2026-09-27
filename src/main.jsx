@@ -106,6 +106,8 @@ const projects = [
       { title: '助听器充电盒 · 开启状态', src: './assets/render-12.webp' },
       { title: '助听器充电盒 · 闭合状态', src: './assets/render-13.webp' },
       { title: '助听器充电盒 · 收纳状态', src: './assets/render-14.webp' },
+      { title: '助听器桌面场景 · 银色', src: './assets/render-15.webp' },
+      { title: '助听器桌面场景 · 香槟金', src: './assets/render-16.webp' },
     ],
   },
   { title: '电商视觉设计', type: '电商视觉', index: '07', image: './assets/project-ecommerce.svg', result: '产品主图 · 卖点提炼 · 活动页面延展' },
