@@ -38,11 +38,12 @@ const caseStudies = [
 ];
 
 const projects = [
-  { title: '海报 / 易拉宝', type: '空间物料', index: '01', image: './assets/project-display.svg', result: '品牌海报 · 产品传播 · 视觉系列延展' },
+  { title: '海报 / 易拉宝', type: '空间物料', index: '01', path: 'works/poster-display/', image: './assets/project-display.svg', result: '品牌海报 · 产品传播 · 视觉系列延展' },
   {
     title: '详情页 / 网页专题',
     type: '数字设计',
     index: '02',
+    path: 'works/web-design/',
     image: './assets/web-page-cover.jpg',
     result: 'Web 与移动端规范 · 专题页独立设计',
     galleryType: 'image-wide',
@@ -55,11 +56,12 @@ const projects = [
       { title: '助听器品牌官网首页', src: './assets/web-page-06.jpg' },
     ],
   },
-  { title: '品牌视觉系统', type: '品牌', index: '03', image: './assets/project-brand.svg', result: 'Logo · 字体 · Icon · 社媒与活动主视觉' },
+  { title: '品牌视觉系统', type: '品牌', index: '03', path: 'works/brand-visual/', image: './assets/project-brand.svg', result: 'Logo · 字体 · Icon · 社媒与活动主视觉' },
   {
     title: '包装与画册设计',
     type: '包装',
     index: '04',
+    path: 'works/packaging/',
     image: './assets/packaging-cover.jpg',
     result: '印刷工艺 · 包装流程 · 供应商落地',
     galleryType: 'image',
@@ -74,6 +76,7 @@ const projects = [
     title: '短视频剪辑',
     type: '视频',
     index: '05',
+    path: 'works/short-video/',
     video: './assets/short-video-edit.mp4',
     poster: './assets/short-video-edit.jpg',
     result: '素颜计划视频 · 节奏剪辑 · 品牌传播',
@@ -120,6 +123,11 @@ const strengths = [
   { icon: Package, code: 'A.04', title: '制作落地经验', text: '了解包装制作及印刷工艺，能把视觉方案持续推进到真实生产和线下场景。' },
   { icon: Wand2, code: 'A.05', title: 'AI 创意与策略分析', text: '运用 AIGC、TapNow、Lovart 与 GPT-5.6 快速验证和迭代创意方向，前期创意产出效率提升 40%；结合 DeepSeek 深挖行业趋势，构建覆盖核心能力、成本结构与差异化优势的竞品分析框架，为团队战略决策提供数据支撑与可行建议。' },
 ];
+
+const isNestedWorkPage = window.location.pathname.includes('/works/');
+const siteRoot = isNestedWorkPage ? '../../' : './';
+const projectHref = (project) => project.path ? `${siteRoot}${project.path}` : `${siteRoot}?work=${project.index}`;
+const assetHref = (path) => isNestedWorkPage && path?.startsWith('./') ? `${siteRoot}${path.slice(2)}` : path;
 
 function useReveal() {
   useEffect(() => {
@@ -281,9 +289,9 @@ function Projects() {
       <div className="project-grid">
         {visible.map((project, index) => (
           <article className={`project-card project-card-${index % 5 + 1} is-visible ${project.gallery ? 'has-gallery' : ''} ${project.video ? '' : 'color-thumbnail-card'} tone-${project.index}`} key={project.title} data-reveal>
-            {project.video ? <LazyProjectVideo src={project.video} poster={project.poster} label={`${project.title}作品预览`} /> : <img src={project.image} alt={`${project.title}作品预览`} loading="lazy" decoding="async" />}
+            {project.video ? <LazyProjectVideo src={assetHref(project.video)} poster={assetHref(project.poster)} label={`${project.title}作品预览`} /> : <img src={assetHref(project.image)} alt={`${project.title}作品预览`} loading="lazy" decoding="async" />}
             <div className="project-overlay"><div><span>{project.index} / {project.type}</span><h3>{project.title}</h3><p>{project.result}</p></div><span className="project-arrow"><ArrowUpRight size={24} /></span></div>
-            <a className="project-open" href={`./?work=${project.index}`} aria-label={`打开${project.title}独立作品页`} />
+            <a className="project-open" href={projectHref(project)} aria-label={`打开${project.title}独立作品页`} />
           </article>
         ))}
       </div>
@@ -308,8 +316,8 @@ function WorkPage({ project }) {
   return (
     <main className="work-page">
       <header className="work-nav">
-        <a className="work-brand" href="./">GUAN WEICONG <span>PORTFOLIO</span></a>
-        <a className="work-back" href="./#projects"><ArrowLeft size={18} />返回精选作品</a>
+        <a className="work-brand" href={siteRoot}>GUAN WEICONG <span>PORTFOLIO</span></a>
+        <a className="work-back" href={`${siteRoot}#projects`}><ArrowLeft size={18} />返回精选作品</a>
       </header>
       <section className="work-hero">
         <div className="work-number">{project.index}</div>
@@ -324,18 +332,18 @@ function WorkPage({ project }) {
           <article className="work-item" key={item.src}>
             <div className="work-media">
               {imageLayout
-                ? <img src={item.src} alt={item.title} loading={index > 1 ? 'lazy' : 'eager'} decoding="async" />
-                : <video src={item.src} poster={item.poster} controls playsInline preload="metadata" />}
+                ? <img src={assetHref(item.src)} alt={item.title} loading={index > 1 ? 'lazy' : 'eager'} decoding="async" />
+                : <video src={assetHref(item.src)} poster={assetHref(item.poster)} controls playsInline preload="metadata" />}
             </div>
             <div className="work-caption"><span>{String(index + 1).padStart(2, '0')}</span><h2>{item.title}</h2></div>
           </article>
         ))}
       </section>
       <nav className="work-pagination" aria-label="其他精选作品">
-        <a href={`./?work=${previous.index}`}><span>PREVIOUS</span><strong>{previous.title}</strong></a>
-        <a href={`./?work=${next.index}`}><span>NEXT</span><strong>{next.title}</strong><ArrowUpRight size={22} /></a>
+        <a href={projectHref(previous)}><span>PREVIOUS</span><strong>{previous.title}</strong></a>
+        <a href={projectHref(next)}><span>NEXT</span><strong>{next.title}</strong><ArrowUpRight size={22} /></a>
       </nav>
-      <footer className="work-footer"><span>© 2026 GUAN WEICONG</span><a href="./#projects">ALL SELECTED WORKS</a></footer>
+      <footer className="work-footer"><span>© 2026 GUAN WEICONG</span><a href={`${siteRoot}#projects`}>ALL SELECTED WORKS</a></footer>
     </main>
   );
 }
@@ -368,7 +376,8 @@ function Contact() {
 function App() {
   useReveal();
   const workId = new URLSearchParams(window.location.search).get('work');
-  const selectedProject = projects.find((project) => project.index === workId);
+  const cleanPath = window.location.pathname.replace(/\/+$/, '');
+  const selectedProject = projects.find((project) => project.index === workId || (project.path && cleanPath.endsWith(`/${project.path.replace(/\/+$/, '')}`)));
   if (selectedProject) return <WorkPage project={selectedProject} />;
   return <><Hero /><main><Experience /><Projects /><Strengths /><Contact /></main></>;
 }
