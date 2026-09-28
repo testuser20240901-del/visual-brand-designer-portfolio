@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
-  ArrowDown, ArrowUpRight, BriefcaseBusiness, Clapperboard, Layers3, Mail,
-  MapPin, MonitorSmartphone, Package, Palette, Phone, Target, Wand2, X,
+  ArrowDown, ArrowLeft, ArrowUpRight, BriefcaseBusiness, Clapperboard, Layers3, Mail,
+  MapPin, MonitorSmartphone, Package, Palette, Phone, Target, Wand2,
 } from 'lucide-react';
 import './styles.css';
 
@@ -269,20 +269,8 @@ function LazyProjectVideo({ src, label, poster }) {
 
 function Projects() {
   const [filter, setFilter] = useState('全部');
-  const [activeGallery, setActiveGallery] = useState(null);
   const filters = ['全部', ...new Set(projects.map((project) => project.type))];
   const visible = filter === '全部' ? projects : projects.filter((project) => project.type === filter);
-
-  useEffect(() => {
-    if (!activeGallery) return undefined;
-    const onKeyDown = (event) => event.key === 'Escape' && setActiveGallery(null);
-    document.body.style.overflow = 'hidden';
-    window.addEventListener('keydown', onKeyDown);
-    return () => {
-      document.body.style.overflow = '';
-      window.removeEventListener('keydown', onKeyDown);
-    };
-  }, [activeGallery]);
 
   return (
     <section className="section projects-section" id="projects">
@@ -295,29 +283,60 @@ function Projects() {
           <article className={`project-card project-card-${index % 5 + 1} is-visible ${project.gallery ? 'has-gallery' : ''} ${project.video ? '' : 'color-thumbnail-card'} tone-${project.index}`} key={project.title} data-reveal>
             {project.video ? <LazyProjectVideo src={project.video} poster={project.poster} label={`${project.title}作品预览`} /> : <img src={project.image} alt={`${project.title}作品预览`} loading="lazy" decoding="async" />}
             <div className="project-overlay"><div><span>{project.index} / {project.type}</span><h3>{project.title}</h3><p>{project.result}</p></div><span className="project-arrow"><ArrowUpRight size={24} /></span></div>
-            {project.gallery && <button className="project-open" type="button" aria-label={`打开${project.title}作品详情`} onClick={() => setActiveGallery(project)} />}
+            <a className="project-open" href={`./?work=${project.index}`} aria-label={`打开${project.title}独立作品页`} />
           </article>
         ))}
       </div>
-      {activeGallery && (
-        <div className="video-modal" role="dialog" aria-modal="true" aria-labelledby="work-modal-title" onMouseDown={(event) => event.target === event.currentTarget && setActiveGallery(null)}>
-          <div className="video-modal-panel">
-            <div className="video-modal-header">
-              <div><span>{activeGallery.galleryType === 'image' ? 'POSTER COLLECTION' : activeGallery.galleryType === 'image-wide' ? '3D RENDER WORKS' : 'VIDEO WORKS'}</span><h3 id="work-modal-title">{activeGallery.title}</h3></div>
-              <button type="button" aria-label="关闭作品详情" onClick={() => setActiveGallery(null)}><X size={24} /></button>
-            </div>
-            <div className={`video-gallery ${activeGallery.galleryType === 'image' ? 'poster-gallery' : activeGallery.galleryType === 'image-wide' ? 'render-gallery' : ''}`}>
-              {activeGallery.gallery.map((item) => (
-                <article key={item.src}>
-                  {activeGallery.galleryType?.startsWith('image') ? <img src={item.src} alt={item.title} loading="lazy" decoding="async" /> : <video src={item.src} poster={item.poster} controls playsInline preload="metadata" />}
-                  <h4>{item.title}</h4>
-                </article>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
     </section>
+  );
+}
+
+function WorkPage({ project }) {
+  const projectPosition = projects.findIndex((item) => item.index === project.index);
+  const previous = projects[(projectPosition - 1 + projects.length) % projects.length];
+  const next = projects[(projectPosition + 1) % projects.length];
+  const media = project.gallery || [{ title: project.title, src: project.image || project.video, poster: project.poster }];
+  const imageLayout = project.galleryType?.startsWith('image') || !project.video;
+  const layoutClass = project.galleryType === 'image' ? 'work-gallery-poster' : imageLayout ? 'work-gallery-wide' : 'work-gallery-video';
+
+  useEffect(() => {
+    document.title = `${project.title} — 关维聪品牌企划作品集`;
+    window.scrollTo(0, 0);
+    return () => { document.title = 'Global Gateway — Your Personal Gateway To Global Connection'; };
+  }, [project]);
+
+  return (
+    <main className="work-page">
+      <header className="work-nav">
+        <a className="work-brand" href="./">GUAN WEICONG <span>PORTFOLIO</span></a>
+        <a className="work-back" href="./#projects"><ArrowLeft size={18} />返回精选作品</a>
+      </header>
+      <section className="work-hero">
+        <div className="work-number">{project.index}</div>
+        <div>
+          <p>{project.type} / SELECTED WORK</p>
+          <h1>{project.title}</h1>
+          <div className="work-hero-meta"><span>{project.result}</span><span>{String(media.length).padStart(2, '0')} WORKS</span></div>
+        </div>
+      </section>
+      <section className={`work-gallery ${layoutClass}`} aria-label={`${project.title}作品展示`}>
+        {media.map((item, index) => (
+          <article className="work-item" key={item.src}>
+            <div className="work-media">
+              {imageLayout
+                ? <img src={item.src} alt={item.title} loading={index > 1 ? 'lazy' : 'eager'} decoding="async" />
+                : <video src={item.src} poster={item.poster} controls playsInline preload="metadata" />}
+            </div>
+            <div className="work-caption"><span>{String(index + 1).padStart(2, '0')}</span><h2>{item.title}</h2></div>
+          </article>
+        ))}
+      </section>
+      <nav className="work-pagination" aria-label="其他精选作品">
+        <a href={`./?work=${previous.index}`}><span>PREVIOUS</span><strong>{previous.title}</strong></a>
+        <a href={`./?work=${next.index}`}><span>NEXT</span><strong>{next.title}</strong><ArrowUpRight size={22} /></a>
+      </nav>
+      <footer className="work-footer"><span>© 2026 GUAN WEICONG</span><a href="./#projects">ALL SELECTED WORKS</a></footer>
+    </main>
   );
 }
 
@@ -346,6 +365,12 @@ function Contact() {
   );
 }
 
-function App() { useReveal(); return <><Hero /><main><Experience /><Projects /><Strengths /><Contact /></main></>; }
+function App() {
+  useReveal();
+  const workId = new URLSearchParams(window.location.search).get('work');
+  const selectedProject = projects.find((project) => project.index === workId);
+  if (selectedProject) return <WorkPage project={selectedProject} />;
+  return <><Hero /><main><Experience /><Projects /><Strengths /><Contact /></main></>;
+}
 
 createRoot(document.getElementById('root')).render(<App />);
